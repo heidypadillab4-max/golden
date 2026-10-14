@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Horse | Equitación</title>
+<link rel="icon" type="image/png" href="ico.ico">
+<style>
+:root {
+    --dorado: #B08D3C;
+    --dorado-oscuro: #8C6A1D;
+    --dorado-hover: #6F5014;
+    --fondo: #A8873F;
+    --dorado-claro: #BFA15F;
+    --texto: #211A0D;
+    --blanco: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #4A350B, #B08D3C, #4A350B);
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+header h1 {
+    font-size: 42px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px #302207;
+}
+
+header p {
+    font-size: 17px;
+    margin-top: 5px;
+}
+
+nav {
+    background: #6F5014;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 13px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: var(--dorado);
+    color: #211A0D;
+}
+
+section {
+    padding: 40px 7%;
+    scroll-margin-top: 70px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 22px;
+    color: #38280B;
+    font-size: 29px;
+}
+
+.contenido {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.inicio {
+    text-align: center;
+    padding-top: 45px;
+}
+
+.inicio img, video {
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 4px solid var(--dorado-oscuro);
+    margin: 20px auto;
+    display: block;
+}
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.tarjeta {
+    background: var(--dorado-claro);
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px #00000025;
+    border: 1px solid #755719;
+}
+
+.tarjeta h3 {
+    margin-bottom: 10px;
+    color: #38280B;
+}
+
+.foto-seccion {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    margin-top: 18px;
+    border-radius: 10px;
+    border: 2px solid #8C6A1D;
+    background-color: #BFA15F;
+}
+
+.boton {
+    display: inline-block;
+    background: var(--dorado-oscuro);
+    color: white;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 12px;
+    transition: 0.3s;
+}
+
+.boton:hover {
+    background: var(--dorado-hover);
+    transform: translateY(-2px);
+}
+
+/* GALERÍA */
+.galeria-controles {
+    text-align: center;
+    margin: 22px 0;
+    padding: 22px;
+    background: #BFA15F;
+    border: 1px solid #755719;
+    border-radius: 12px;
+}
+
+#photoInput {
+    display: block;
+    max-width: 100%;
+    margin: 15px auto;
+    padding: 10px;
+    border: 1px solid #8C6A1D;
+    border-radius: 8px;
+    background: #FFFFFF;
+}
+
+.nota-galeria {
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.mensaje {
+    text-align: center;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.foto {
+    background: linear-gradient(145deg, #D7BB78, #BFA15F);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px #00000030;
+    border: 1px solid #755719;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.foto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px #00000040;
+}
+
+.foto img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    cursor: zoom-in;
+    border: 2px solid #8C6A1D;
+    transition: 0.3s;
+}
+
+.foto img:hover {
+    border-color: #F4D47B;
+    filter: brightness(1.05);
+}
+
+.foto .boton {
+    width: 100%;
+}
+
+/* VISOR DE FOTOGRAFÍAS */
+#visor {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000000E8;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+#visor.abierto {
+    display: flex;
+}
+
+#imagenAmpliada {
+    max-width: 90%;
+    max-height: 82vh;
+    object-fit: contain;
+    border: 3px solid #D7B65D;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #B08D3C80;
+}
+
+#cerrarVisor {
+    position: absolute;
+    top: 15px;
+    right: 22px;
+    font-size: 35px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* CONTACTO ESTILO ELEGANTE */
+#contacto {
+    padding: 55px 7%;
+}
+
+.contacto-estilo {
+    max-width: 850px;
+    margin: auto;
+    padding: 45px 20px;
+    background: linear-gradient(145deg, #BFA15F, #A8873F);
+    border: 1px solid #755719;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 5px 18px #00000025;
+}
+
+.contacto-item {
+    margin-bottom: 42px;
+}
+
+.contacto-item:last-child {
+    margin-bottom: 0;
+}
+
+.contacto-item h3 {
+    font-size: 17px;
+    letter-spacing: 4px;
+    color: #38280B;
+    margin-bottom: 20px;
+}
+
+.contacto-item p,
+.contacto-item a {
+    font-size: 17px;
+    color: #4A350B;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.contacto-item a:hover {
+    color: #FFFFFF;
+}
+
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 15px;
+}
+
+.redes-sociales a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #755719;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: bold;
+    color: #38280B;
+    transition: 0.3s;
+}
+
+.redes-sociales a:hover {
+    background: #6F5014;
+    color: white;
+    transform: translateY(-4px);
+}
+
+footer {
+    background: #6F5014;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 25px;
+}
+
+/* ADAPTACIÓN A CELULARES */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 32px;
+    }
+
+    nav {
+        position: static;
+    }
+
+    nav a {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    section {
+        padding: 30px 5%;
+    }
+
+    .galeria {
+        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+        gap: 12px;
+    }
+
+    .foto img {
+        height: 240px;
+    }
+
+    #imagenAmpliada {
+        max-width: 100%;
+        max-height: 75vh;
+    }
+
+    .contacto-estilo {
+        padding: 35px 15px;
+    }
+
+    .contacto-item h3 {
+        font-size: 14px;
+        letter-spacing: 3px;
+    }
+
+    .contacto-item p,
+    .contacto-item a {
+        font-size: 15px;
+    }
+
+    .redes-sociales {
+        gap: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>GOLDEN HORSE</h1>
+    <p>Pasión, elegancia y excelencia ecuestre</p>
+</header>
+
+<nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#disciplinas">Disciplinas</a>
+    <a href="#cuidados">Cuidados</a>
+    <a href="#entrenamiento">Entrenamiento</a>
+    <a href="#galeria">Galería</a>
+    <a href="#contacto">Contacto</a>
+</nav>
+
+<!-- INICIO -->
+<section id="inicio" class="inicio">
+    <div class="contenido">
+        <h2>Bienvenidos a Golden Horse</h2>
+
+        <img src="images/golden horse2.jpeg" alt="Golden Horse">
+
+        <p>
+            Un espacio dedicado al maravilloso mundo de la equitación,
+            donde la elegancia, la disciplina y el amor por los caballos se unen.
+        </p>
+
+        <p>
+            Descubrí el deporte ecuestre y la conexión especial
+            entre el jinete y su caballo.
+        </p>
+    </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+    <div class="contenido">
+        <h2>Sobre Nosotros</h2>
+
+        <div class="tarjetas">
+            <article class="tarjeta">
+                <h3>¿Quiénes somos?</h3>
+                <p>
+                    Golden Horse es un proyecto dedicado al mundo ecuestre,
+                    promoviendo la pasión por los caballos y la práctica de la equitación.
+                </p>
+            </article>
+
+            <article class="tarjeta">
+                <h3>Nuestra misión</h3>
+                <p>
+                    Fomentar el aprendizaje de la equitación, el respeto hacia
+                    los caballos y la práctica responsable del deporte ecuestre.
+                </p>
+            </article>
+
+            <article class="tarjeta">
+                <h3>Nuestra visión</h3>
+                <p>
+                    Ser un referente de elegancia, compromiso y dedicación
+                    dentro del mundo de la equitación.
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- DISCIPLINAS -->
+<section id="disciplinas">
+    <div class="contenido">
+        <h2>Disciplinas Ecuestres</h2>
+
+        <div class="tarjetas">
+            <article class="tarjeta">
+                <h3>Salto ecuestre</h3>
+                <p>
+                    Disciplina en la que el jinete y su caballo superan
+                    obstáculos siguiendo un recorrido.
+                </p>
+                <img class="foto-seccion"
+                     src="images/salto.jpeg"
+                     alt="Salto ecuestre">
+            </article>
+
+            <article class="tarjeta">
+                <h3>Doma clásica</h3>
+                <p>
+                    Busca la armonía, precisión y comunicación
+                    entre el caballo y el jinete.
+                </p>
+                <img class="foto-seccion"
+                     src="images/doma.jpeg"
+                     alt="Doma clásica">
+            </article>
+
+            <article class="tarjeta">
+                <h3>Equitación recreativa</h3>
+                <p>
+                    Una forma de disfrutar la experiencia de montar
+                    a caballo y aprender sobre su cuidado.
+                </p>
+                <img class="foto-seccion"
+                     src="images/equitacion.jpeg"
+                     alt="Equitación recreativa">
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- CUIDADOS -->
+<section id="cuidados">
+    <div class="contenido">
+        <h2>Cuidados del Caballo</h2>
+
+        <div class="tarjetas">
+            <article class="tarjeta">
+                <h3>Alimentación</h3>
+                <p>
+                    Una alimentación equilibrada, agua limpia y una dieta
+                    adecuada son esenciales para su bienestar.
+                </p>
+                <img class="foto-seccion"
+                     src="images/alimentacion3.jpeg"
+                     alt="Alimentación del caballo">
+            </article>
+
+            <article class="tarjeta">
+                <h3>Higiene</h3>
+                <p>
+                    El cepillado, la limpieza de los cascos y el mantenimiento
+                    de un espacio limpio ayudan a cuidar al caballo.
+                </p>
+                <img class="foto-seccion"
+                     src="images/higiene.jpeg"
+                     alt="Higiene del caballo">
+            </article>
+
+            <article class="tarjeta">
+                <h3>Salud</h3>
+                <p>
+                    Las revisiones veterinarias y el cuidado preventivo
+                    contribuyen a mantener al caballo saludable.
+                </p>
+                <img class="foto-seccion"
+                     src="images/salud.jpeg"
+                     alt="Salud del caballo">
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ENTRENAMIENTO -->
+<section id="entrenamiento">
+    <div class="contenido">
+        <h2>Entrenamiento del Jinete</h2>
+
+        <img src="images/jinete2.jpeg"
+             alt="Jinete practicando equitación"
+             style="display:block;width:100%;max-width:650px;max-height:400px;object-fit:cover;margin:0 auto 20px;border-radius:12px;border:3px solid #8C6A1D;">
+
+        <p>
+            La equitación requiere equilibrio, concentración, paciencia
+            y comunicación con el caballo. El entrenamiento debe realizarse
+            de manera progresiva, con orientación adecuada y respetando
+            el bienestar del animal.
+        </p>
+    </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+    <div class="contenido">
+        <h2>Galería Golden Horse</h2>
+
+        <p style="text-align:center;">
+            Guardá tus fotografías favoritas de caballos, jinetes
+            y actividades ecuestres.
+        </p>
+
+        <div class="galeria-controles">
+            <label for="photoInput">
+                <strong>
+                    Seleccioná las fotografías que querés agregar:
+                </strong>
+            </label>
+
+            <input type="file"
+                   id="photoInput"
+                   accept="image/*"
+                   multiple>
+
+            <p class="nota-galeria">
+                Tus fotos quedan guardadas en este navegador de esta computadora.
+            </p>
+
+            <button type="button"
+                    class="boton"
+                    id="limpiarGaleria">
+                Eliminar todas las fotos
+            </button>
+        </div>
+
+        <p id="estadoGaleria"
+           class="mensaje"
+           aria-live="polite">
+            Preparando galería...
+        </p>
+
+        <div id="photoGallery" class="galeria"></div>
+    </div>
+</section>
+
+<!-- VIDEO DE CABALLOS CENTRADO (DESPUÉS DE LA GALERÍA) -->
+<div class="contenido" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+    <video controls>
+        <source src="caballos.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de video.
+    </video>
+</div>
+
+<!-- VISOR DE FOTOGRAFÍAS -->
+<div id="visor"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Fotografía ampliada">
+
+    <button type="button"
+            id="cerrarVisor"
+            aria-label="Cerrar fotografía">×</button>
+
+    <img id="imagenAmpliada"
+         src=""
+         alt="Fotografía ampliada">
+</div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+    <div class="contenido">
+        <h2>Contacto</h2>
+
+        <div class="contacto-estilo">
+
+            <div class="contacto-item">
+                <h3>CORREO ELECTRÓNICO</h3>
+                <a href="mailto:heidypadillab4@gmail.com">
+                    heidypadillab4@gmail.com
+                </a>
+            </div>
+
+            <div class="contacto-item">
+                <h3>TELÉFONO</h3>
+                <a href="tel:+50492956397">
+                    +504 9295-6397
+                </a>
+            </div>
+
+            <div class="contacto-item">
+                <h3>DIRECCIÓN</h3>
+                <p>El Cajón, Santa Cruz de Yojoa, Cortés, Honduras</p>
+            </div>
+
+            <div class="contacto-item">
+                <h3>ENCUÉNTRANOS EN</h3>
+
+                <div class="redes-sociales">
+                    <a href="#"
+                       aria-label="Facebook"
+                       title="Facebook">f</a>
+
+                    <a href="#"
+                       aria-label="Instagram"
+                       title="Instagram">◎</a>
+
+                    <a href="#"
+                       aria-label="TikTok"
+                       title="TikTok">♪</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PIE DE PÁGINA -->
+<footer>
+    <h3>GOLDEN HORSE</h3>
+    <p>Pasión por los caballos, amor por la equitación.</p>
+    <p>
+        &copy; <span id="anio"></span>
+        Golden Horse. Todos los derechos reservados.
+    </p>
+</footer>
+
+<script>
+document.getElementById("anio").textContent =
+    new Date().getFullYear();
+
+/* GALERÍA PERMANENTE CON INDEXEDDB */
+const inputFotos = document.getElementById("photoInput");
+const galeria = document.getElementById("photoGallery");
+const estadoGaleria = document.getElementById("estadoGaleria");
+const botonLimpiar = document.getElementById("limpiarGaleria");
+
+let baseDatos = null;
+let urlsImagenes = [];
+
+const solicitudDB = indexedDB.open("GoldenHorseFotos", 1);
+
+solicitudDB.onupgradeneeded = function(evento) {
+    const db = evento.target.result;
+
+    if (!db.objectStoreNames.contains("fotos")) {
+        db.createObjectStore("fotos", {
+            keyPath: "id",
+            autoIncrement: true
+        });
+    }
+};
+
+solicitudDB.onsuccess = function(evento) {
+    baseDatos = evento.target.result;
+    mostrarFotosGuardadas();
+};
+
+solicitudDB.onerror = function() {
+    estadoGaleria.textContent =
+        "No se pudo abrir el almacenamiento de fotos. Probá con otro navegador.";
+};
+
+function limpiarUrls() {
+    urlsImagenes.forEach(function(url) {
+        URL.revokeObjectURL(url);
+    });
+
+    urlsImagenes = [];
+}
+
+function mostrarFotosGuardadas() {
+    if (!baseDatos) return;
+
+    estadoGaleria.textContent = "Cargando fotografías...";
+
+    limpiarUrls();
+    galeria.replaceChildren();
+
+    const transaccion =
+        baseDatos.transaction(["fotos"], "readonly");
+
+    const solicitudFotos =
+        transaccion.objectStore("fotos").getAll();
+
+    solicitudFotos.onsuccess = function() {
+        const fotos = solicitudFotos.result;
+
+        galeria.replaceChildren();
+
+        if (fotos.length === 0) {
+            estadoGaleria.textContent =
+                "Todavía no hay fotos. ¡Agregá la primera! 🐎";
+            return;
+        }
+
+        estadoGaleria.textContent =
+            "📸 Fotografías guardadas: " + fotos.length;
+
+        fotos.forEach(function(foto) {
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "foto";
+
+            const imagen = document.createElement("img");
+            imagen.alt = "Foto de Golden Horse";
+            imagen.loading = "lazy";
+
+            const url = URL.createObjectURL(foto.imagen);
+            urlsImagenes.push(url);
+            imagen.src = url;
+
+            /* AMPLIAR FOTOGRAFÍA */
+            imagen.addEventListener("click", function() {
+                const visor = document.getElementById("visor");
+                const imagenAmpliada =
+                    document.getElementById("imagenAmpliada");
+
+                imagenAmpliada.src = url;
+                imagenAmpliada.alt = imagen.alt;
+
+                visor.classList.add("abierto");
+
+                document.getElementById("cerrarVisor").focus();
+            });
+
+            /* ELIMINAR UNA FOTOGRAFÍA */
+            const botonEliminar = document.createElement("button");
+
+            botonEliminar.type = "button";
+            botonEliminar.className = "boton";
+            botonEliminar.textContent = "Eliminar foto";
+
+            botonEliminar.addEventListener("click", function() {
+                if (!confirm("¿Querés eliminar esta fotografía?")) {
+                    return;
+                }
+
+                const borrar =
+                    baseDatos.transaction(["fotos"], "readwrite");
+
+                borrar.objectStore("fotos").delete(foto.id);
+
+                borrar.oncomplete = mostrarFotosGuardadas;
+
+                borrar.onerror = function() {
+                    alert("No se pudo eliminar la fotografía.");
+                };
+            });
+
+            tarjeta.append(imagen, botonEliminar);
+            galeria.appendChild(tarjeta);
+        });
+    };
+
+    solicitudFotos.onerror = function() {
+        estadoGaleria.textContent =
+            "No se pudieron cargar las fotografías guardadas.";
+    };
+}
+
+/* AGREGAR FOTOGRAFÍAS */
+inputFotos.addEventListener("change", function() {
+    if (!baseDatos) {
+        alert("Esperá un momento mientras se prepara la galería.");
+        inputFotos.value = "";
+        return;
+    }
+
+    const archivos = Array.from(inputFotos.files);
+
+    const imagenes = archivos.filter(function(archivo) {
+        return archivo.type.startsWith("image/");
+    });
+
+    if (imagenes.length === 0) {
+        estadoGaleria.textContent =
+            "Seleccioná al menos una imagen válida.";
+
+        inputFotos.value = "";
+        return;
+    }
+
+    estadoGaleria.textContent = "Guardando fotografías...";
+
+    const transaccion =
+        baseDatos.transaction(["fotos"], "readwrite");
+
+    const almacen = transaccion.objectStore("fotos");
+
+    imagenes.forEach(function(archivo) {
+        almacen.add({
+            nombre: archivo.name,
+            imagen: archivo,
+            fecha: Date.now()
+        });
+    });
+
+    transaccion.oncomplete = function() {
+        inputFotos.value = "";
+        mostrarFotosGuardadas();
+    };
+
+    transaccion.onerror = function() {
+        estadoGaleria.textContent = "No se pudieron guardar las fotografías.";
+        inputFotos.value = "";
+    };
+});
+
+/* CERRAR VISOR DE FOTOGRAFÍAS */
+const visor = document.getElementById("visor");
+const cerrarVisor = document.getElementById("cerrarVisor");
+
+cerrarVisor.addEventListener("click", function() {
+    visor.classList.remove("abierto");
+});
+
+visor.addEventListener("click", function(evento) {
+    if (evento.target === visor) {
+        visor.classList.remove("abierto");
+    }
+});
+
+document.addEventListener("keydown", function(evento) {
+    if (evento.key === "Escape") {
+        visor.classList.remove("abierto");
+    }
+});
+
+/* LIMPIAR TODA LA GALERÍA */
+botonLimpiar.addEventListener("click", function() {
+    if (!baseDatos) return;
+
+    if (!confirm("¿Estás seguro de que querés eliminar todas las fotografías de la galería?")) {
+        return;
+    }
+
+    const transaccion = baseDatos.transaction(["fotos"], "readwrite");
+    const almacen = transaccion.objectStore("fotos");
+    const solicitud = almacen.clear();
+
+    solicitud.onsuccess = function() {
+        mostrarFotosGuardadas();
+    };
+
+    solicitud.onerror = function() {
+        alert("No se pudo limpiar la galería.");
+    };
+});
+</script>
+
+</body>
+</html>
